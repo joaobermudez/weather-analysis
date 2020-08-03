@@ -1,0 +1,156 @@
+----->weather data analysis<------ from kaggle notebook
+
+# %% [code]
+# This Python 3 environment comes with many helpful analytics libraries installed
+# It is defined by the kaggle/python Docker image: https://github.com/kaggle/docker-python
+# For example, here's several helpful packages to load
+
+import numpy as np # linear algebra
+import pandas as pd # data processing, CSV file I/O (e.g. pd.read_csv)
+
+# Input data files are available in the read-only "../input/" directory
+# For example, running this (by clicking run or pressing Shift+Enter) will list all files under the input directory
+
+import os
+for dirname, _, filenames in os.walk('/kaggle/input'):
+    for filename in filenames:
+        print(os.path.join(dirname, filename))
+
+# You can write up to 5GB to the current directory (/kaggle/working/) that gets preserved as output when you create a version using "Save & Run All" 
+# You can also write temporary files to /kaggle/temp/, but they won't be saved outside of the current session
+
+# %% [code]
+df = pd.read_csv('/kaggle/input/1. Weather Data.csv')
+
+# %% [code]
+df
+
+# %% [code]
+df.info()
+
+
+# %% [code]
+df.head(10)
+
+# %% [code]
+df.shape
+
+# %% [code]
+df.index
+
+# %% [code]
+df.columns
+
+# %% [code]
+df.dtypes
+
+# %% [code]
+df["Temp_C"].unique
+
+# %% [code]
+df["Wind Speed_km/h"].unique
+
+# %% [code]
+df.nunique
+
+# %% [code]
+df.nunique()
+
+# %% [code]
+df['Wind Speed_km/h'].nunique()
+
+# %% [code]
+df['Wind Speed_km/h'].unique()
+
+# %% [code]
+df.count()
+
+# %% [code]
+df["Weather"].count()
+
+# %% [code]
+df['Weather'].value_counts()
+
+# %% [code]
+df['Visibility_km'].value_counts()
+
+# %% [code]
+df["Weather"].unique
+
+# %% [code]
+df['Weather'].value_counts() 
+
+# %% [code]
+df[df.Weather == 'Clear']
+
+# %% [code]
+df.groupby('Weather').get_group("Clear")
+
+# %% [code]
+f=df.groupby('Wind Speed_km/h').get_group(4)
+f
+
+# %% [code]
+f.count()
+
+# %% [code]
+df.isnull().sum()
+
+# %% [code]
+df.isnull().sum()
+
+# %% [code]
+df.rename(columns = {"Weather":"Weather Condition"})
+
+# %% [code]
+df.Visibility_km.mean()
+
+# %% [code]
+df.Press_kPa.std()
+
+# %% [code]
+df['Rel Hum_%'].var()
+
+# %% [code]
+df.head(5)
+
+# %% [code]
+df.rename(columns = {"Weather":"Weather Condition"})
+
+# %% [code]
+df.head()
+
+# %% [code]
+
+df.groupby('Weather').get_group('Snow')
+
+# %% [code]
+df[df['Weather']=='Snow']
+
+# %% [code]
+df[df['Weather'].str.contains('Snow')].tail(50)
+
+# %% [code]
+df
+
+# %% [code]
+df[(df['Wind Speed_km/h']>24)&(df['Visibility_km']==25)].head(10)
+
+# %% [code]
+df.groupby('Weather').mean()
+
+
+# %% [code]
+df.groupby('Rel Hum_%').var()
+
+# %% [code]
+df.groupby('Dew Point Temp_C').max()
+
+# %% [code]
+df[df['Weather']=='Fog']
+
+# %% [code]
+df[(df['Weather']=='Clear')|(df['Visibility_km']>25)].tail(10)
+
+# %% [code]
+df[((df['Weather']=='Clear')&(df['Rel Hum_%']>50))|(df['Visibility_km']>40)].tail(20)
